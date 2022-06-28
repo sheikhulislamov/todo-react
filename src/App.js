@@ -6,6 +6,21 @@ import { nanoid } from 'nanoid';
 
 function App(props) {
 
+  function toggleTaskCompleted(id) {
+    const updatedTasks = tasks.map(task => {
+      if (id === task.id) {
+        return {...task, completed: !task.completed}
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
+  function deleteTask(id) {
+    const remainingTasks = tasks.filter(task => id !== task.id);
+    setTasks(remainingTasks);
+  }
+
   const [tasks, setTasks] = useState(props.tasks);
 
   function addTask(name) {
@@ -23,6 +38,8 @@ function App(props) {
       name={task.name} 
       completed={task.completed} 
       key={task.id}
+      toggleTaskCompleted={toggleTaskCompleted}
+      deleteTask={deleteTask}
     />
   )
   );
